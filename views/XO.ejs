@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11151d">
+  <title>XO — Play together</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="XO home"><span class="brand-mark">X<span>O</span></span><span>tac<span class="brand-accent">.toe</span></span></a>
+      <div class="online"><span class="online-dot"></span><span id="onlineCount">Connecting…</span></div>
+    </header>
+    <section class="layout">
+      <aside class="sidebar">
+        <div class="eyebrow">YOUR SESSION</div>
+        <div class="profile-card"><div class="avatar" id="avatar">?</div><div><strong id="playerName">Guest</strong><small id="playerId">Connecting</small></div><button id="editName" class="icon-button" aria-label="Change name" title="Change name">✎</button></div>
+        <div class="sidebar-divider"></div>
+        <div class="side-heading"><span>Players waiting</span><span class="count-pill" id="waitingCount">0</span></div>
+        <div id="waitingList" class="waiting-list"><p class="muted empty-players">Looking for players…</p></div>
+        <div class="sidebar-note"><span class="note-icon">✦</span><p>Good games are won one move at a time.</p></div>
+      </aside>
+      <section class="game-panel">
+        <div class="game-heading"><div><div class="eyebrow">QUICK MATCH</div><h1>Make your move.</h1><p class="subheading">A little strategy goes a long way.</p></div><button id="soundToggle" class="sound-button" aria-pressed="false"><span>♪</span> Sound off</button></div>
+        <div class="match-card">
+          <div class="players-row">
+            <div class="player-chip" id="youChip"><span class="mark-badge x-badge">X</span><div><small>YOU</small><strong id="youLabel">—</strong></div><b class="score" id="scoreX">0</b></div>
+            <div class="versus">VS</div>
+            <div class="player-chip opponent-chip" id="opponentChip"><span class="mark-badge o-badge">O</span><div><small>OPPONENT</small><strong id="opponentLabel">Waiting…</strong></div><b class="score" id="scoreO">0</b></div>
+          </div>
+          <div id="statusLine" class="status-line"><span class="status-pulse"></span><span id="statusText">Enter your name to get started.</span></div>
+          <div class="board-wrap"><div id="board" class="board" role="grid" aria-label="Tic tac toe board">
+            <% for (let i = 0; i < 9; i++) { %><button class="cell" data-index="<%= i %>" role="gridcell" aria-label="Empty square <%= i + 1 %>" disabled></button><% } %>
+          </div><div id="resultOverlay" class="result-overlay" hidden><div class="result-icon" id="resultIcon">✦</div><h2 id="resultTitle">Round over</h2><p id="resultText"></p><button id="nextRound" class="primary-button">Play next round <span>→</span></button></div></div>
+          <div class="board-footer"><span>ROUND <b id="roundNumber">—</b></span><span>SCORE CARRIES THROUGH</span><button id="leaveMatch" class="text-button" hidden>Leave match</button></div>
+        </div>
+        <div class="bottom-hint"><span>⌘</span> Take your time. The board is waiting.</div>
+      </section>
+    </section>
+    <footer>Made for a friendly little rivalry <span>♥</span></footer>
+  </main>
+  <dialog id="nameDialog" class="name-dialog"><form method="dialog" id="nameForm"><div class="dialog-mark">X<span>O</span></div><div class="eyebrow">WELCOME TO THE BOARD</div><h2>What should we call you?</h2><p>Your name will be shown to the player you’re matched with.</p><label for="nameInput">YOUR NAME</label><input id="nameInput" name="name" maxlength="18" autocomplete="nickname" placeholder="e.g. Alex" required><div class="dialog-actions"><button class="primary-button" id="joinButton" value="join">Find me a match <span>→</span></button></div></form></dialog>
+  <script src="/socket.io/socket.io.js"></script><script src="/static/index.js"></script>
+</body>
+</html>
